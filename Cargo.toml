@@ -1,0 +1,13 @@
+[package]
+name = "nya"
+version = "0.0.1"
+authors = ["Keigo Nakatani <k5n@users.noreply.github.com>"]
+
+[dependencies]
+uuid = { version = "0.3", features = ["v4"] }
+base32 = "0.3"
+git2 = "0.6"
+toml = "0.2"
+rustc-serialize = "0.3"
+curl = "0.4"
+json = "0.11"
