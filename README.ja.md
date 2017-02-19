@@ -18,12 +18,12 @@ Nyarticlesの記事は専用のプレビュー付きMarkdownエディタで管�
 |- draft
 |  |- Q63NHLDSABFYNC7KK4KSF3QPCM
 |  |  |- .git
-|  .  |- Q63NHLDSABFYNC7KK4KSF3QPCM.md
+|  .  |- article.md
 |  .  \- meta.json
 \- post
-   |- U2T3GZ4QBZEOXB5TVLNHSPXXS4
+   |- 08a262b70630d7fb1fcf12e63c0fd51
    |  |- .git
-   .  |- U2T3GZ4QBZEOXB5TVLNHSPXXS4.md
+   .  |- article.md
    .  \- meta.json
 ```
 
@@ -67,13 +67,13 @@ access_token = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
 
 ### 新規記事の作成（下書き）
 
-新規記事IDでディレクトリが生成され、Markdownファイルとmeta.jsonファイルが配置されます。またGitリポジトリが生成されて、それらのファイルがコミットされます。
+新規下書きIDでディレクトリが生成され、Markdownファイルとmeta.jsonファイルが配置されます。またGitリポジトリが生成されて、それらのファイルがコミットされます。
 
 ```
 $ nya new
 new repository = draft/KNNBCIYF5BF4RJ4HVHLTNRHE7Y
 $ ls -a draft/KNNBCIYF5BF4RJ4HVHLTNRHE7Y
-./  ../  .git/  KNNBCIYF5BF4RJ4HVHLTNRHE7Y.md  meta.json
+./  ../  .git/  article.md  meta.json
 ```
 
 ### 下書き記事の保存
@@ -87,10 +87,11 @@ $ nya save draft/KNNBCIYF5BF4RJ4HVHLTNRHE7Y
 ### 下書き記事の投稿
 
 GitHubにGistとして投稿されます。
-またdraftからpostに移動します。
+下書きIDの代わりにGist IDがディレクトリ名になってdraftからpostに移動します。
 
 ```
 $ nya post draft/KNNBCIYF5BF4RJ4HVHLTNRHE7Y
+post/068a262b70630d7fb1fcf12e63c0fd51
 ```
 
 ### 投稿済み記事のローカル保存
@@ -98,7 +99,7 @@ $ nya post draft/KNNBCIYF5BF4RJ4HVHLTNRHE7Y
 変更がローカルのGitにコミットされます。
 
 ```
-$ nya save post/KNNBCIYF5BF4RJ4HVHLTNRHE7Y
+$ nya save post/068a262b70630d7fb1fcf12e63c0fd51
 ```
 
 ### 投稿済み記事の更新
@@ -106,7 +107,7 @@ $ nya save post/KNNBCIYF5BF4RJ4HVHLTNRHE7Y
 変更がGitHubのGistにpushされます。
 
 ```
-$ nya update post/KNNBCIYF5BF4RJ4HVHLTNRHE7Y
+$ nya update post/068a262b70630d7fb1fcf12e63c0fd51
 ```
 
 ### 下書き記事の一覧表示
@@ -127,9 +128,9 @@ draft/KNNBCIYF5BF4RJ4HVHLTNRHE7Y
 
 ```
 $ nya posts
-post/JY6PXLOXDJBZPOQORGW4ZLUCSY
+post/068a262b70630d7fb1fcf12e63c0fd51
   # Qiitaを脱出するぞ！
-post/KNNBCIYF5BF4RJ4HVHLTNRHE7Y
+post/4dd52d7e44ff30928f5143b2436a83e1
   # Nyarticles作成計画
 ```
 

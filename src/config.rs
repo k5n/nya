@@ -10,7 +10,6 @@ const CONFIG_FILE: &'static str = "config.toml";
 
 #[derive(Debug, RustcDecodable)]
 pub struct GitHubConfig {
-    pub id: String,
     pub access_token: String,
 }
 

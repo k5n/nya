@@ -8,6 +8,7 @@ use std::io::prelude::*;
 
 #[derive(RustcDecodable)]
 struct ResponseGistCreated {
+    id: String,
     git_push_url: String,
 }
 
@@ -81,9 +82,9 @@ impl<'a> GitHub<'a> {
         self.access_token
     }
 
-    /// creates a gist and returns the push url.
+    /// creates a gist and returns it's ID and push url.
     pub fn create_gist(&self, filename: &str, content: &String)
-            -> Result<String> {
+            -> Result<(String, String)> {
         let json = json_to_create_gist(filename, content);
 
         let mut curl = Easy::new();
@@ -96,6 +97,6 @@ impl<'a> GitHub<'a> {
         check_response_code(response_code, 201, "Failed to create a gist.")?;
 
         let decoded: ResponseGistCreated = json::decode(&response_json)?;
-        Ok(decoded.git_push_url)
+        Ok((decoded.id, decoded.git_push_url))
     }
 }

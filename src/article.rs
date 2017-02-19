@@ -23,7 +23,7 @@ fn copy_all_files<P: AsRef<Path>, Q: AsRef<Path>>(from_dir: P, to_dir: Q)
     let from_dir = from_dir.as_ref();
     let to_dir = to_dir.as_ref();
     if !from_dir.is_dir() || !to_dir.is_dir() {
-        return Err(From::from("Both from and to must be directories."))
+        return Err(From::from("Both 'from_dir' and 'to_dir' must be directories."))
     }
 
     for entry in fs::read_dir(&from_dir)? {
@@ -106,7 +106,7 @@ pub struct Article {
 impl Article {
     /// generates a new draft article.
     pub fn generate() -> Failable {
-        let id = ArticleId::generate();
+        let id = ArticleId::generate_draft_id();
         let article = Article::new(Path::new("draft").join(&id.id))?;
         GitRepository::init(article.get_path())?;
         article.get_article_file().generate_empty_file()?;
@@ -133,10 +133,13 @@ impl Article {
         let path = article_path.as_ref();
         let is_draft = is_draft_path(&path)
             .ok_or("The specified path is not either draft or post.")?;
-        let id = ArticleId::from_article_dir(&path)
-            .ok_or("Invalid article ID.")?;
+        let id = if is_draft {
+                ArticleId::from_draft_dir(&path)
+            } else {
+                ArticleId::from_post_dir(&path)
+            }.ok_or("Invalid article ID.")?;
 
-        let article_file = ArticleFile::new(path.join(id.id.clone() + ".md"));
+        let article_file = ArticleFile::new(path.join("article.md"));
         let meta_file = MetaFile::new(path.join(META_FILE_NAME));
 
         Ok(Article {
@@ -190,9 +193,9 @@ impl Article {
 
         let filename = self.get_article_file().get_filename();
         let content = self.get_article_file().get_content()?;
-        let push_url = github.create_gist(filename, &content)?;
+        let (id, push_url) = github.create_gist(filename, &content)?;
 
-        let post_dir = Path::new("post").join(self.get_id());
+        let post_dir = Path::new("post").join(id);
         GitRepository::clone(&push_url, &post_dir)?;
 
         copy_all_files(self.get_path(), &post_dir)?;
